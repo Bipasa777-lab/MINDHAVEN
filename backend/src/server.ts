@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import bookingRoutes from "./modules/booking/routes";
+import peerSupportRoutes from "./modules/peer-support/routes"; // ✅ Import peer-support routes
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,9 @@ app.get("/api/health", (req, res) => {
 
 // ✅ Booking routes
 app.use("/api/bookings", bookingRoutes);
+
+// ✅ Peer Support routes
+app.use("/api/peer-support", peerSupportRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/bookingdb")
