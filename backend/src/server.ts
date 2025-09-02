@@ -2,8 +2,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+
 import bookingRoutes from "./modules/booking/routes";
-import peerSupportRoutes from "./modules/peer-support/routes"; // ✅ Import peer-support routes
+import peerSupportRoutes from "./modules/peer-support/routes";
+import authRoutes from "./modules/auth/routes"; // ✅ Import auth routes
 
 dotenv.config();
 const app = express();
@@ -21,6 +23,9 @@ app.use("/api/bookings", bookingRoutes);
 
 // ✅ Peer Support routes
 app.use("/api/peer-support", peerSupportRoutes);
+
+// ✅ Auth routes
+app.use("/api/auth", authRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/bookingdb")

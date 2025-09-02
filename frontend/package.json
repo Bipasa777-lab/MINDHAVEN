@@ -1,0 +1,28 @@
+{
+  "name": "digital-mental-health-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "axios": "latest",
+    "tailwindcss": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "eslint": "latest",
+    "jest": "latest",
+    "babel-jest": "latest",
+    "ts-jest": "latest"
+  }
+}
