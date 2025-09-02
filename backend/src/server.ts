@@ -3,10 +3,11 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-// Import route modules
+// ✅ Import route modules
 import bookingRoutes from "./modules/booking/routes";
 import peerSupportRoutes from "./modules/peer-support/routes";
-import aiChatRoutes from "./modules/ai-chat/routes"; // ✅ Import ai-chat routes
+import authRoutes from "./modules/auth/routes"; 
+import aiChatRoutes from "./modules/ai-chat/routes"; 
 
 dotenv.config();
 const app = express();
@@ -24,6 +25,9 @@ app.use("/api/bookings", bookingRoutes);
 
 // ✅ Peer Support routes
 app.use("/api/peer-support", peerSupportRoutes);
+
+// ✅ Auth routes
+app.use("/api/auth", authRoutes);
 
 // ✅ AI Chat routes
 app.use("/api/ai-chat", aiChatRoutes);
