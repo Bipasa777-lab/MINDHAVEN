@@ -2,8 +2,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+
+// Import route modules
 import bookingRoutes from "./modules/booking/routes";
-import peerSupportRoutes from "./modules/peer-support/routes"; // ✅ Import peer-support routes
+import peerSupportRoutes from "./modules/peer-support/routes";
+import aiChatRoutes from "./modules/ai-chat/routes"; // ✅ Import ai-chat routes
 
 dotenv.config();
 const app = express();
@@ -21,6 +24,9 @@ app.use("/api/bookings", bookingRoutes);
 
 // ✅ Peer Support routes
 app.use("/api/peer-support", peerSupportRoutes);
+
+// ✅ AI Chat routes
+app.use("/api/ai-chat", aiChatRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/bookingdb")
