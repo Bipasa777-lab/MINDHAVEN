@@ -1,8 +1,8 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, AutoModelForSequenceClassification
 
 # Paths
-mental_path = "model/mental_health_chatbot"
-suicide_path = "model/suicidality"
+mental_path = "models/mental_health_chatbot"
+suicide_path = "models/suicidality"
 
 print("Downloading thrishala/mental_health_chatbot...")
 AutoTokenizer.from_pretrained("thrishala/mental_health_chatbot").save_pretrained(mental_path)
