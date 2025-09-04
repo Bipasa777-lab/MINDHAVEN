@@ -1,20 +1,22 @@
-// lib/auth.ts
-import Cookies from "js-cookie";
+import api, { setAuthToken } from "./api";
 
-const TOKEN_KEY = "auth_token";
-
-export function saveToken(token: string) {
-  Cookies.set(TOKEN_KEY, token, { expires: 7 }); // 7 days
+export async function login(email: string, password: string) {
+  const res = await api.post("/login", { email, password });
+  const { token } = res.data;
+  localStorage.setItem("token", token);
+  setAuthToken(token);
+  return res.data;
 }
 
-export function getToken(): string | undefined {
-  return Cookies.get(TOKEN_KEY);
+export async function signup(email: string, password: string) {
+  return api.post("/signup", { email, password });
 }
 
-export function clearToken() {
-  Cookies.remove(TOKEN_KEY);
+export async function getProfile() {
+  return api.get("/profile");
 }
 
-export function isAuthenticated(): boolean {
-  return !!getToken();
+export function logout() {
+  localStorage.removeItem("token");
+  setAuthToken(undefined);
 }
