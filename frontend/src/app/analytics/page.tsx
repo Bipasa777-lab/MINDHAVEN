@@ -1,8 +1,8 @@
-// src/app/analytics/page.tsx
 "use client";
+
 import { useEffect, useState } from "react";
 import AnalyticsChart from "@/components/AnalyticsChart";
-import { api } from "@/lib/api";
+import api from "@/lib/api";
 
 type Point = { label: string; users?: number; bookings?: number; chats?: number };
 
@@ -26,9 +26,11 @@ export default function AnalyticsPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
       <h2 className="text-2xl font-semibold mb-4">Anonymous Analytics</h2>
-      <p className="text-sm text-gray-600 mb-6">Institution-level trends (anonymized).</p>
+      <p className="text-sm text-gray-600 mb-6">
+        Institution-level trends (anonymized).
+      </p>
 
-      {loading ? <div>Loading…</div> : <AnalyticsChart data={data} />}
+      {loading ? <div>Loading...</div> : <AnalyticsChart data={data} />}
     </div>
   );
 }
