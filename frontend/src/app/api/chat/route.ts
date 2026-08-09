@@ -10,12 +10,25 @@ const google = createGoogleGenerativeAI({
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { messages }: { messages: UIMessage[] } = await req.json();
+  try {
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+    if (!apiKey || apiKey === "AIzaSyAbDnWKJ5dencrCxwNBEKgdlOslo76Dps8" || apiKey.trim() === "") {
+      return new Response(
+        JSON.stringify({
+          error: "Invalid or missing Google Gemini API key. Please update GOOGLE_GENERATIVE_AI_API_KEY in frontend/.env.local with a valid key from Google AI Studio (https://aistudio.google.com/)."
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
-  const result = streamText({
-    model: google("gemini-2.5-flash"),
-    messages: convertToModelMessages(messages),
-    system: `
+    const { messages }: { messages: UIMessage[] } = await req.json();
+
+    const modelName = process.env.GEMINI_MODEL || "gemini-3.6-flash";
+
+    const result = streamText({
+      model: google(modelName),
+      messages: convertToModelMessages(messages),
+      system: `
 # 🧠 MINDHAVEN – Mental Health Chat Support
 
 You are **MINDHAVEN**, a trusted mental health companion and first-aid assistant.  
@@ -89,12 +102,22 @@ Your role is to provide **empathetic support, coping strategies, and evidence-ba
   “I hear how heavy this feels. Remember, you don’t have to carry it alone. Talking to a trusted friend, or seeking a therapist, can really help.”  
 
 ---
-    `,
-  });
+      `,
+    });
 
-  // ✅ Stream response back to client
-  return result.toUIMessageStreamResponse({
-    sendSources: true,
-    sendReasoning: true,
-  });
+    // ✅ Stream response back to client
+    return result.toUIMessageStreamResponse({
+      sendSources: true,
+      sendReasoning: true,
+    });
+  } catch (error: any) {
+    console.error("❌ AI Chat Route Error:", error);
+    return new Response(
+      JSON.stringify({
+        error: error.message || "Failed to process AI chat request.",
+        details: "Ensure GOOGLE_GENERATIVE_AI_API_KEY in frontend/.env.local is valid."
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
 }
